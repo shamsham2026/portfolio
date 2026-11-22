@@ -242,10 +242,16 @@ textarea.draft-edit{width:100%;border:none;padding:18px;font-size:1rem;line-heig
 .draft-btn{border:none;background:rgba(255,138,0,.14);color:var(--amber);font-weight:800;border-radius:10px;padding:10px 18px;display:inline-flex;gap:7px;align-items:center}
 .draft-btn:hover{background:rgba(255,138,0,.25)}
 
+/* ---------- target schools ---------- */
+.school-entry{background:var(--inner-soft);border:1.5px solid rgba(25,118,210,.18);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.school-entry-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.school-entry-top .se-name{font-weight:900;color:var(--blue-dark)}
+.del-school{border:none;background:none;color:#c62828;font-weight:700;font-size:.9rem;padding:8px}
+.add-school-btn{display:inline-flex;align-items:center;gap:8px;border:2px dashed var(--blue);background:var(--inner);color:var(--blue-dark);font-weight:900;font-size:1rem;border-radius:12px;padding:11px 20px}
+.add-school-btn:hover{background:var(--blue);color:#fff}
+
 /* ---------- preview toolbar ---------- */
-.pv-toolbar{background:var(--inner);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
-.tpl-pick{display:flex;align-items:center;gap:10px;font-weight:700}
-.tpl-pick select{border:1.5px solid var(--input-line);border-radius:9px;padding:8px 12px;background:var(--input-bg)}
+.pv-toolbar{background:var(--inner);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;display:flex;justify-content:flex-start;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .save-wrap{position:relative}
 .save-btn{background:var(--header-bg);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:800;display:inline-flex;gap:8px;align-items:center;font-size:.98rem}
 .save-menu{position:absolute;right:0;top:calc(100% + 8px);background:var(--inner);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);min-width:230px;padding:6px;z-index:40;display:none}
@@ -290,20 +296,7 @@ font-size:14.5px;line-height:1.6;
 .sheet .stmt-sec-head h3.sec{margin-top:24px}
 .pv-edit-btn{position:absolute;top:0;right:0;border:none;background:#eef1f5;color:#607d8b;border-radius:999px;padding:4px 13px;font-size:12.5px;font-weight:700;display:inline-flex;gap:5px;align-items:center;min-height:1.9rem}
 .pv-edit-btn:hover{background:#dde6ee;color:#37474f}
-/* modern template */
-.sheet.tpl-modern{font-family:"Noto Sans TC",sans-serif}
-.sheet.tpl-modern h1{font-family:"Noto Sans TC",sans-serif;text-align:left;color:#00695c;letter-spacing:0}
-.sheet.tpl-modern .en-name{text-align:left}
-.sheet.tpl-modern .name-rule{border-top:3px solid #26a69a}
-.sheet.tpl-modern h3.sec{color:#00695c;border-bottom:none;border-left:5px solid #26a69a;padding:2px 0 2px 10px;background:#e0f2f1}
-.sheet.tpl-modern th{background:#e0f2f1}
-.sheet.tpl-modern th,.sheet.tpl-modern td{border-color:#b2dfdb}
-/* minimal template */
-.sheet.tpl-minimal h1{font-family:"Noto Sans TC",sans-serif;color:#212121;letter-spacing:4px}
-.sheet.tpl-minimal .name-rule{border-top:1.5px solid #212121}
-.sheet.tpl-minimal h3.sec{color:#212121;border-bottom:1px solid #bdbdbd;font-family:"Noto Sans TC",sans-serif}
-.sheet.tpl-minimal th{background:#fafafa}
-.sheet.tpl-minimal th,.sheet.tpl-minimal td{border-color:#d6d6d6}
+
 
 /* ---------- page footer ---------- */
 footer.page-foot{background:var(--foot-bg);border-top:1px solid var(--line);margin-top:26px}
@@ -594,31 +587,14 @@ body{background:#fff}
 <div class="card-head"><span class="num">5</span><h2 id="h5">希望報考的中學</h2></div>
 <div class="hint">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01" stroke-linecap="round"/></svg>
-<span>（請以英文填寫資料）填寫你希望報考的中學名稱和校長姓名，會顯示在下方履歷表上。</span>
+<span>（請以英文填寫資料）填寫你希望報考的中學名稱和校長姓名，會顯示在下方履歷表上。如希望報考多於一間中學，可按下方按鈕新增。</span>
 </div>
-<div class="grid2">
-<div class="field" style="margin-bottom:0">
-<label class="flabel" for="targetSchool">學校名稱 School Name</label>
-<input class="txt" id="targetSchool" type="text" placeholder="e.g. St. Paul's Co-educational College" autocomplete="off" />
-</div>
-<div class="field" style="margin-bottom:0">
-<label class="flabel" for="principalName">校長姓名 Principal's Name</label>
-<input class="txt" id="principalName" type="text" placeholder="e.g. Dr. Chan Tai Man" autocomplete="off" />
-</div>
-</div>
+<div id="targetSchoolsWrap"></div>
+<button type="button" class="add-school-btn" id="addSchoolBtn">＋ 新增一間中學</button>
 </section>
 
 <!-- ============ preview toolbar ============ -->
 <div class="pv-toolbar no-print">
-<div class="tpl-pick">
-<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-<label for="tplSel" class="sr" style="position:absolute;left:-9999px">版式</label>
-<select id="tplSel">
-<option value="classic">傳統版式</option>
-<option value="modern">清新版式</option>
-<option value="minimal">極簡版式</option>
-</select>
-</div>
 <div class="save-wrap">
 <button type="button" class="save-btn" id="saveBtn" aria-haspopup="true" aria-expanded="false">
 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
@@ -694,10 +670,7 @@ Page 1 of 1
 <p class="stmt-text" id="pvStatement"></p>
 
 <h3 class="sec">希望報考的中學</h3>
-<div style="display:grid;grid-template-columns:1fr;gap:7px">
-<div><span style="font-weight:700">學校名稱 School：</span><span id="pvTargetSchool">-</span></div>
-<div><span style="font-weight:700">校長姓名 Principal：</span><span id="pvPrincipal">-</span></div>
-</div>
+<div id="pvTargetSchools"></div>
 
 <div class="sheet-foot">
 <span id="pvFootName">學生姓名</span>
@@ -1016,20 +989,59 @@ const parts = all.map(t => TRAIT_NOUN[t] || t.toLowerCase());
 if (parts.length === 1) return parts[0];
 return parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1];
 }
-function generateStatement(){
+function activityClause(a){
+const t = a.title.trim();
+const org = (a.org || "").trim();
+if (a.cat === "award") return "I was honoured to receive “" + t + "”" + (org? " from " + org: "");
+if (a.cat === "service") return org? "I served as " + org + " (" + t + ")": "I took up the service role of " + t;
+return "I took part in " + t + (org? " (" + org + ")": "");
+}
+function activitySentence(limit, withTail){
+const acts = activities.filter(a => a.title && a.title.trim()).slice(0, limit);
+if (!acts.length) return "";
+return "Beyond the classroom, " + acts.map(activityClause).join("; ") + "." + (withTail? " These experiences have strengthened my sense of responsibility and my willingness to contribute.": "");
+}
+const SHORT_CLOSING = "I look forward to growing and contributing in my new school.";
+function buildStatement(o){
 const interest = $("interest").value.trim();
 const impact = $("impact").value;
 const openers = OPENINGS[tone];
-let text = openers[genRound % openers.length](traitPhrase());
+const parts = [openers[genRound % openers.length](traitPhrase())];
 if (interest){
-text += " In my free time, I enjoy " + interest + ". ";
-text += impact && IMPACT_LINE[impact]? IMPACT_LINE[impact] + ". ": "It has taught me a lot beyond the classroom and given me more confidence. ";
-} else {
-text += " In my free time, I enjoy exploring new things, and this curiosity has taught me a lot and given me more confidence. ";
+let ip = "In my free time, I enjoy " + interest + ".";
+if (o.interestMode === "full") ip += " " + (impact && IMPACT_LINE[impact]? IMPACT_LINE[impact] + ".": "It has taught me a lot beyond the classroom and given me more confidence.");
+parts.push(ip);
+} else if (o.interestMode === "full"){
+parts.push("In my free time, I enjoy exploring new things, and this curiosity has taught me a lot and given me more confidence.");
 }
-text += CLOSINGS[genRound % CLOSINGS.length];
+const actSent = activitySentence(o.acts, o.tail);
+if (actSent) parts.push(actSent);
+parts.push(o.shortClose? SHORT_CLOSING: CLOSINGS[genRound % CLOSINGS.length]);
+return parts.join(" ");
+}
+function fitLimit(text){
+if (text.length <= 350) return text;
+const cut = text.slice(0, 350);
+const idx = Math.max(cut.lastIndexOf("."), cut.lastIndexOf(";"));
+if (idx > 150) return cut.slice(0, idx) + ".";
+return cut;
+}
+function generateStatement(){
+const hasActs = activities.some(a => a.title && a.title.trim());
+const hasInterest = $("interest").value.trim().length > 0;
+let text = buildStatement({ acts: 3, tail: true, shortClose: false, interestMode: "full" });
+if (hasActs){
+const tries = [
+{ acts: 3, tail: false, shortClose: false, interestMode: "full" },
+{ acts: 2, tail: false, shortClose: false, interestMode: "full" },
+{ acts: 2, tail: false, shortClose: true, interestMode: "full" },
+{ acts: 3, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" },
+{ acts: 2, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" }
+];
+for (let i = 0; i < tries.length && text.length > 350; i++) text = buildStatement(tries[i]);
+}
 genRound++;
-return text.slice(0, 350);
+return hasActs? fitLimit(text): text.slice(0, 350);
 }
 function renderStatement(){
 $("draftView").textContent = statement;
@@ -1073,11 +1085,54 @@ $("stmtCount").textContent = statement.length;
 $("pvStatement").textContent = statement;
 });
 
+/* ---------- 希望報考的中學（可多間） ---------- */
+let targetSchools = [{ school: "", principal: "" }];
+function renderTargetSchools(){
+$("targetSchoolsWrap").innerHTML = targetSchools.map((t, i) => `
+<div class="school-entry" data-ts="${i}">
+<div class="school-entry-top">
+<span class="se-name">中學 ${i + 1}</span>
+${targetSchools.length > 1? '<button type="button" class="del-school" data-del-school="' + i + '">移除</button>': ""}
+</div>
+<div class="grid2">
+<div class="field" style="margin-bottom:0">
+<label class="flabel" for="tsSchool${i}">學校名稱 School Name</label>
+<input class="txt" id="tsSchool${i}" data-tsf="school" type="text" placeholder="e.g. St. Paul's Co-educational College" autocomplete="off" value="${esc(t.school)}" />
+</div>
+<div class="field" style="margin-bottom:0">
+<label class="flabel" for="tsPrin${i}">校長姓名 Principal's Name</label>
+<input class="txt" id="tsPrin${i}" data-tsf="principal" type="text" placeholder="e.g. Dr. Chan Tai Man" autocomplete="off" value="${esc(t.principal)}" />
+</div>
+</div>
+</div>`).join("");
+}
+$("targetSchoolsWrap").addEventListener("input", (e) => {
+const entry = e.target.closest("[data-ts]"); if (!entry) return;
+const t = targetSchools[+entry.dataset.ts]; if (!t) return;
+const f = e.target.dataset.tsf;
+if (f === "school") t.school = e.target.value;
+if (f === "principal") t.principal = e.target.value;
+updatePreview();
+});
+$("targetSchoolsWrap").addEventListener("click", (e) => {
+const btn = e.target.closest("[data-del-school]"); if (!btn) return;
+if (targetSchools.length <= 1) return;
+targetSchools.splice(+btn.dataset.delSchool, 1);
+renderTargetSchools();
+updatePreview();
+toast("已移除一間中學");
+});
+$("addSchoolBtn").addEventListener("click", () => {
+targetSchools.push({ school: "", principal: "" });
+renderTargetSchools();
+const inputs = $("targetSchoolsWrap").querySelectorAll("[data-tsf='school']");
+if (inputs.length) inputs[inputs.length - 1].focus();
+});
+
 /* ---------- 預覽 ---------- */
 const F = {
 nameZh: $("nameZh"), nameEn: $("nameEn"), age: $("age"), school: $("school"),
-gradeLevel: $("gradeLevel"), admitYear: $("admitYear"), phone: $("phone"), email: $("email"),
-targetSchool: $("targetSchool"), principalName: $("principalName")
+gradeLevel: $("gradeLevel"), admitYear: $("admitYear"), phone: $("phone"), email: $("email")
 };
 function val(el){ return el.value.trim();}
 function dash(s){ return s? esc(s): "-";}
@@ -1101,8 +1156,15 @@ $("pvGrade").textContent = val(F.gradeLevel) || "-";
 $("pvYear").textContent = val(F.admitYear) || "-";
 $("pvPhone").textContent = val(F.phone) || "-";
 $("pvEmail").textContent = val(F.email) || "-";
-$("pvTargetSchool").textContent = val(F.targetSchool) || "-";
-$("pvPrincipal").textContent = val(F.principalName) || "-";
+/* target schools: list every entered school in order */
+const tsEntered = targetSchools.filter(t => t.school.trim() || t.principal.trim());
+if (!tsEntered.length){
+$("pvTargetSchools").innerHTML = '<div style="display:grid;grid-template-columns:1fr;gap:7px"><div><span style="font-weight:700">學校名稱 School：</span>-</div><div><span style="font-weight:700">校長姓名 Principal：</span>-</div></div>';
+} else {
+$("pvTargetSchools").innerHTML = tsEntered.map(t =>
+'<div style="margin-bottom:10px"><div><span style="font-weight:700">學校名稱 School：</span>' + dash(t.school.trim()) + '</div>' +
+'<div><span style="font-weight:700">校長姓名 Principal：</span>' + dash(t.principal.trim()) + "</div></div>").join("");
+}
 
 /* academics table: columns = records, newest first */
 const recs = records.slice().reverse();
@@ -1135,14 +1197,9 @@ return '<div class="act-cat-name">' + c.name + '</div><ul class="act-list">' + i
 }).join("");
 }
 }
-[F.nameZh, F.nameEn, F.age, F.school, F.gradeLevel, F.admitYear, F.phone, F.email, F.targetSchool, F.principalName]
+[F.nameZh, F.nameEn, F.age, F.school, F.gradeLevel, F.admitYear, F.phone, F.email]
 .forEach(el => { el.addEventListener("input", updatePreview); el.addEventListener("change", updatePreview);});
 document.querySelectorAll('input[name="gender"]').forEach(el => el.addEventListener("change", updatePreview));
-
-/* ---------- 版式 ---------- */
-$("tplSel").addEventListener("change", () => {
-$("sheet").className = "sheet tpl-" + $("tplSel").value;
-});
 
 /* ---------- 儲存選單 ---------- */
 const saveMenu = $("saveMenu");
@@ -1190,8 +1247,6 @@ const css = ".sheet{background:#fff;color:#26303e;max-width:794px;margin:0 auto;
 ".sheet .info-grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:7px 20px;align-content:start;padding-top:4px}.sheet .info-grid .k{font-weight:700}.sheet .info-grid .wide{grid-column:1/-1}" +
 ".sheet h3.sec{color:#174a5e;font-size:18px;margin:24px 0 6px;padding-bottom:5px;border-bottom:1.5px solid #c9d4e6;font-family:'Noto Serif TC',serif}" +
 ".sheet .sec-note{color:#5b6b82;font-size:12.5px;margin:2px 0 8px}.sheet table{width:100%;border-collapse:collapse;margin-top:6px}.sheet th,.sheet td{border:1px solid #c9d4e6;padding:7px 10px;text-align:left;vertical-align:top}.sheet th{background:#f2f5fa;font-weight:700}.sheet td.grade{text-align:center;font-weight:700}.sheet .empty-note{color:#7c8798;font-style:italic}.sheet ul.act-list{margin:4px 0;padding-left:20px}.sheet .act-cat-name{font-weight:800;color:#37474f;margin-top:10px}.sheet .stmt-text{white-space:pre-wrap;text-align:justify}.sheet .sheet-foot{display:flex;justify-content:space-between;color:#8a97a8;font-size:12.5px;border-top:1px solid #e3e9f2;margin-top:34px;padding-top:10px}" +
-".sheet.tpl-modern h1{font-family:'Noto Sans TC',sans-serif;text-align:left;color:#00695c;letter-spacing:0}.sheet.tpl-modern .en-name{text-align:left}.sheet.tpl-modern .name-rule{border-top:3px solid #26a69a}.sheet.tpl-modern h3.sec{color:#00695c;border-bottom:none;border-left:5px solid #26a69a;padding:2px 0 2px 10px;background:#e0f2f1}.sheet.tpl-modern th{background:#e0f2f1}.sheet.tpl-modern th,.sheet.tpl-modern td{border-color:#b2dfdb}" +
-".sheet.tpl-minimal h1{font-family:'Noto Sans TC',sans-serif;color:#212121;letter-spacing:4px}.sheet.tpl-minimal .name-rule{border-top:1.5px solid #212121}.sheet.tpl-minimal h3.sec{color:#212121;border-bottom:1px solid #bdbdbd;font-family:'Noto Sans TC',sans-serif}.sheet.tpl-minimal th{background:#fafafa}.sheet.tpl-minimal th,.sheet.tpl-minimal td{border-color:#d6d6d6}" +
 "@media print{body{margin:0}.sheet{max-width:none}}";
 const doc = '<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>' + esc(fileBase()) +
 '</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet"><style>' +
@@ -1206,10 +1261,11 @@ version: 1,
 personal: { nameZh: F.nameZh.value, nameEn: F.nameEn.value, age: F.age.value, gender: genderVal(),
 school: F.school.value, gradeLevel: F.gradeLevel.value, admitYear: F.admitYear.value,
 phone: F.phone.value, email: F.email.value, photo: photoData,
-targetSchool: F.targetSchool.value, principalName: F.principalName.value},
+targetSchools: targetSchools.map(t => ({ school: t.school, principal: t.principal })),
+targetSchool: targetSchools.length? targetSchools[0].school: "", principalName: targetSchools.length? targetSchools[0].principal: ""},
 records: records, activities: activities,
 traits: traits, otherOn: otherOn, otherTrait: otherText, tone: tone, interest: $("interest").value, impact: $("impact").value,
-statement: statement, template: $("tplSel").value
+statement: statement
 };
 }
 $("dlJson").addEventListener("click", () => {
@@ -1228,7 +1284,14 @@ const p = d.personal || {};
 F.nameZh.value = p.nameZh || ""; F.nameEn.value = p.nameEn || ""; F.age.value = p.age || "";
 F.school.value = p.school || ""; F.gradeLevel.value = p.gradeLevel || ""; F.admitYear.value = p.admitYear || "";
 F.phone.value = p.phone || ""; F.email.value = p.email || "";
-F.targetSchool.value = p.targetSchool || ""; F.principalName.value = p.principalName || "";
+if (Array.isArray(p.targetSchools) && p.targetSchools.length){
+targetSchools = p.targetSchools.map(t => ({ school: (t && t.school) || "", principal: (t && t.principal) || "" }));
+} else if (p.targetSchool || p.principalName){
+targetSchools = [{ school: p.targetSchool || "", principal: p.principalName || "" }];
+} else {
+targetSchools = [{ school: "", principal: "" }];
+}
+renderTargetSchools();
 document.querySelectorAll('input[name="gender"]').forEach(g => { g.checked = g.value === p.gender;});
 photoData = p.photo || null; renderPhoto();
 if (Array.isArray(d.records) && d.records.length){
@@ -1251,7 +1314,6 @@ $("interest").value = d.interest || "";
 $("interestCount").textContent = $("interest").value.length;
 $("impact").value = IMPACT_LEGACY[d.impact] || d.impact || "";
 if (typeof d.statement === "string" && d.statement) statement = d.statement;
-if (d.template){ $("tplSel").value = d.template; $("sheet").className = "sheet tpl-" + d.template;}
 renderRecords(); renderActivities(); renderStatement();
 toast("備份已匯入");
 } catch (err){ toast("匯入失敗：檔案格式不正確");}
@@ -1268,9 +1330,12 @@ let lines = [name + (val(F.nameEn)? "（" + val(F.nameEn) + "）": ""),
 "現就讀學校：" + (val(F.school) || "-"),
 "現時級別：" + (val(F.gradeLevel) || "-") + "　入讀年份：" + (val(F.admitYear) || "-"),
 "家長電話：" + (val(F.phone) || "-"),
-"家長電郵：" + (val(F.email) || "-"),
-"希望報考的中學：" + (val(F.targetSchool) || "-"),
-"校長姓名：" + (val(F.principalName) || "-"), "", ""];
+"家長電郵：" + (val(F.email) || "-")];
+targetSchools.forEach((t, i) => {
+lines.push("希望報考的中學" + (targetSchools.length > 1? "（" + (i + 1) + "）": "") + "：" + (t.school.trim() || "-"));
+lines.push("校長姓名：" + (t.principal.trim() || "-"));
+});
+lines.push("", "");
 records.slice().reverse().forEach(r => {
 lines.push(stageLabel(r) + "：");
 r.subjects.forEach(s => { if (s.name.trim()) lines.push("　" + s.name.trim() + "：" + (s.grade || "-"));});
@@ -1296,6 +1361,7 @@ ta.remove();
 }
 
 /* ---------- init ---------- */
+renderTargetSchools();
 renderRecords();
 renderActivities();
 renderStatement();
