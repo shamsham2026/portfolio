@@ -509,7 +509,7 @@ body{background:#fff}
 <div class="card-head"><span class="num">4</span><h2 id="h4">自我介紹與興趣</h2></div>
 <div class="hint">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.4L12 15l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M19 15l.8 2 2.8-2.8-.8 2-.8-2-2-.8 2-.8z"/></svg>
-<span>先揀幾個最貼近你性格嘅詞，再寫低你最鍾意嘅興趣，系統會幫你砌出一版自我介紹初稿，你再慢慢改到啱自己為止。</span>
+<span>先揀幾個最貼近你性格嘅詞，再寫低你最鍾意嘅興趣，系統會用生動嘅句式幫你砌出一版有畫面感嘅自我介紹初稿；撳「再寫一版」可以睇唔同寫法，你再慢慢改到啱自己為止。</span>
 </div>
 <div class="stmt-grid">
 <div>
@@ -914,7 +914,7 @@ let otherOn = false;
 let otherText = "";
 let tone = "confident";
 let genRound = 0;
-let statement = "I am a student who is passionate about learning. I love asking questions and I am always willing to try new things. In my free time, I enjoy my favourite activities, which have taught me patience and built my confidence. In secondary school, I hope to keep this proactive attitude and continue to grow in a new environment.";
+let statement = "I am a confident, curious student who loves learning and is never afraid to try something new. In my free time, I enjoy exploring new ideas and activities, which have built my patience and confidence. In secondary school, I look forward to seizing every opportunity and growing day by day.";
 let editing = false;
 
 $("traitChips").innerHTML = TRAITS.map(t => '<button type="button" class="chip" data-trait="' + t + '">' + t + '</button>').join("") +
@@ -957,31 +957,39 @@ document.querySelectorAll("#toneRow .tone-btn").forEach(b => b.classList.toggle(
 $("interest").addEventListener("input", () => { $("interestCount").textContent = $("interest").value.length;});
 
 const IMPACT_LINE = {
-"Patience and focus": "Over time, it has built up my patience and helped me stay focused on what I am doing",
-"Perseverance — never giving up": "I have faced many difficulties along the way, but it has taught me to persevere and never give up easily",
-"Teamwork and cooperation": "It has taught me how to work hand in hand with others to reach a shared goal",
-"Confidence in speaking": "Thanks to it, I am now much bolder when speaking and expressing my ideas",
-"Wider horizons, flexible thinking": "It has broadened my horizons and made my thinking more flexible",
-"Time management and self-discipline": "To balance my studies and my interest, I have become better at managing my time and more self-disciplined"
+"Patience and focus": "Practising hour after hour, it has taught me patience and sharpened my focus",
+"Perseverance — never giving up": "Through stumbles and second tries, it has taught me never to give up easily",
+"Teamwork and cooperation": "Side by side with others, sharing wins and setbacks, it taught me real teamwork",
+"Confidence in speaking": "From a racing heart to a steadier voice, it made me confident in speaking up",
+"Wider horizons, flexible thinking": "It has opened new worlds to me and taught me to see questions from every angle",
+"Time management and self-discipline": "Juggling it with homework, I have learned to plan ahead and manage my time well"
 };
 const OPENINGS = {
 confident: [
-(tr) => "I am a confident and motivated student. My greatest strengths are " + tr + ", and I always give my best in everything I do.",
-(tr) => "I am a proactive student who is not afraid of challenges. With " + tr + ", I set clear goals for myself and work hard to achieve them."
+(tr) => "I am a confident, energetic student whose strengths in " + tr + " drive me to give my best in all I do.",
+(tr) => "I am a proactive student whose strengths in " + tr + " keep me chasing goals and facing challenges head-on.",
+(tr) => "I am a bright, motivated student whose strengths in " + tr + " shine through in how I learn and lead."
 ],
 humble: [
-(tr) => "I am a humble and sincere student. My strengths — " + tr + " — remind me to keep learning from my teachers and classmates every day.",
-(tr) => "I am a steady and down-to-earth student. Built on " + tr + ", I improve step by step and never rush my progress."
+(tr) => "I am a humble, sincere student whose strengths in " + tr + " help me grow steadily, step by step.",
+(tr) => "I am a quiet, steady worker whose strengths in " + tr + " keep my progress honest, day by day.",
+(tr) => "I am a thoughtful, earnest student whose strengths in " + tr + " remind me to listen and stay modest."
 ],
 creative: [
-(tr) => "I am a student full of ideas. Drawing on " + tr + ", I love breaking problems down and finding new ways to solve them.",
-(tr) => "I am a curious student who enjoys turning bold ideas into real work. My strengths in " + tr + " help me keep exploring."
+(tr) => "I am an imaginative student, always asking 'what if?', whose strengths in " + tr + " spark fresh ideas.",
+(tr) => "I am a curious student whose strengths in " + tr + " turn bold ideas into real, creative work.",
+(tr) => "To me, learning is an adventure, and my strengths in " + tr + " bring originality to every project."
 ]
 };
 const CLOSINGS = [
-"In secondary school, I will keep this attitude, work hard, and live up to the expectations of my teachers and family.",
-"In the future, I hope to make good use of my strengths and contribute to my new school.",
-"A new stage means a new beginning, and I will seize every learning opportunity with a positive attitude."
+"In secondary school, I will bring this energy with me and keep growing day by day.",
+"Looking ahead, I hope to serve my new school and discover what I can truly do.",
+"A new chapter is beginning, and I am ready to seize every chance with a smile."
+];
+const INTEREST_INTROS = [
+(i) => "After school, you will often find me enjoying " + i + " — the best part of my day.",
+(i) => "In my free time, I love " + i + " and happily lose track of time doing it.",
+(i) => "Outside class, nothing makes me happier than " + i + ", and I enjoy every minute."
 ];
 function traitPhrase(){
 const all = traits.slice();
@@ -994,27 +1002,32 @@ return parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1];
 function activityClause(a){
 const t = a.title.trim();
 const org = (a.org || "").trim();
-if (a.cat === "award") return "I was honoured to receive “" + t + "”" + (org? " from " + org: "");
-if (a.cat === "service") return org? "I served as " + org + " (" + t + ")": "I took up the service role of " + t;
-return "I took part in " + t + (org? " (" + org + ")": "");
+if (a.cat === "award") return "I was proud and grateful to receive “" + t + "”" + (org? " from " + org: "");
+if (a.cat === "service") return org? "I had the honour of serving as " + org + " (" + t + ")": "I took up the service role of " + t + " with pride";
+return "I threw myself into " + t + (org? " (" + org + ")": "");
 }
 function activitySentence(limit, withTail){
 const acts = activities.filter(a => a.title && a.title.trim()).slice(0, limit);
 if (!acts.length) return "";
-return "Beyond the classroom, " + acts.map(activityClause).join("; ") + "." + (withTail? " These experiences have strengthened my sense of responsibility and my willingness to contribute.": "");
+return "Beyond the classroom, " + acts.map(activityClause).join("; ") + "." + (withTail? " Each of these moments has shaped me — building my responsibility, my confidence, and my desire to give back.": "");
 }
-const SHORT_CLOSING = "I look forward to growing and contributing in my new school.";
+const SHORT_CLOSING = "I cannot wait to start this new chapter and grow in my new school.";
 function buildStatement(o){
 const interest = $("interest").value.trim();
 const impact = $("impact").value;
 const openers = OPENINGS[tone];
 const parts = [openers[genRound % openers.length](traitPhrase())];
 if (interest){
-let ip = "In my free time, I enjoy " + interest + ".";
-if (o.interestMode === "full") ip += " " + (impact && IMPACT_LINE[impact]? IMPACT_LINE[impact] + ".": "It has taught me a lot beyond the classroom and given me more confidence.");
+const impactSent = impact && IMPACT_LINE[impact]? IMPACT_LINE[impact] + ".": "It has taught me a lot beyond the classroom and given me more confidence.";
+let ip;
+if (o.interestMode === "compact") ip = "In my free time, I enjoy " + interest + ". " + impactSent;
+else {
+ip = INTEREST_INTROS[genRound % INTEREST_INTROS.length](interest);
+if (o.interestMode === "full") ip += " " + impactSent;
+}
 parts.push(ip);
 } else if (o.interestMode === "full"){
-parts.push("In my free time, I enjoy exploring new things, and this curiosity has taught me a lot and given me more confidence.");
+parts.push("In my free time, I love exploring new things — a new book, a new skill, a new question — and it has taught me so much beyond the classroom.");
 }
 const actSent = activitySentence(o.acts, o.tail);
 if (actSent) parts.push(actSent);
@@ -1029,21 +1042,20 @@ if (idx > 150) return cut.slice(0, idx) + ".";
 return cut;
 }
 function generateStatement(){
-const hasActs = activities.some(a => a.title && a.title.trim());
 const hasInterest = $("interest").value.trim().length > 0;
 let text = buildStatement({ acts: 3, tail: true, shortClose: false, interestMode: "full" });
-if (hasActs){
 const tries = [
 { acts: 3, tail: false, shortClose: false, interestMode: "full" },
 { acts: 2, tail: false, shortClose: false, interestMode: "full" },
 { acts: 2, tail: false, shortClose: true, interestMode: "full" },
-{ acts: 3, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" },
-{ acts: 2, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" }
+{ acts: 2, tail: false, shortClose: true, interestMode: hasInterest? "compact": "skip" },
+{ acts: 1, tail: false, shortClose: true, interestMode: hasInterest? "compact": "skip" },
+{ acts: 1, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" },
+{ acts: 0, tail: false, shortClose: true, interestMode: hasInterest? "short": "skip" }
 ];
 for (let i = 0; i < tries.length && text.length > 350; i++) text = buildStatement(tries[i]);
-}
 genRound++;
-return hasActs? fitLimit(text): text.slice(0, 350);
+return fitLimit(text);
 }
 function renderStatement(){
 $("draftView").textContent = statement;
